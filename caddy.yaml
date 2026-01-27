@@ -2,59 +2,74 @@ logging:
   logs:
     default:
       level: INFO
+
 storage:
-  "module": "file_system"
-  "root": "/data"
+  module: file_system
+  root: /data
+
 apps:
+  # -------------------------------
+  # TLS / Certificates
+  # -------------------------------
   tls:
     certificates:
       automate:
         - livekit-vyom.indusnettechnologies.com
         - turn-livekit-vyom.indusnettechnologies.com
         - whip-livekit-vyom.indusnettechnologies.com
+
+  # -------------------------------
+  # HTTP / HTTPS (Browser traffic)
+  # -------------------------------
   http:
     servers:
+      main:
+        routes:
+          # LiveKit API / WebSocket
+          - match:
+              - host:
+                  - livekit-vyom.indusnettechnologies.com
+            handle:
+              - handler: reverse_proxy
+                upstreams:
+                  - dial: localhost:7880
+
+          # WHIP endpoint
+          - match:
+              - host:
+                  - whip-livekit-vyom.indusnettechnologies.com
+            handle:
+              - handler: reverse_proxy
+                upstreams:
+                  - dial: localhost:8080
+
+      # HTTP → HTTPS redirect
       redirect:
-        listen: [":80"]
+        listen:
+          - ":80"
         routes:
           - handle:
               - handler: static_response
-                headers:
-                  Location: ["https://{http.request.host}{http.request.uri}"]
                 status_code: 301
+                headers:
+                  Location:
+                    - "https://{http.request.host}{http.request.uri}"
+
+  # -------------------------------
+  # Layer4 (TURN over TLS)
+  # -------------------------------
   layer4:
     servers:
-      main:
-        listen: [":443"]
+      turn:
+        listen:
+          - ":443"
         routes:
           - match:
-            - tls:
-                sni:
-                  - "turn-livekit-vyom.indusnettechnologies.com"
-            handle:
-              - handler: tls
-              - handler: proxy
-                upstreams:
-                  - dial: ["localhost:5349"]
-          - match:
               - tls:
                   sni:
-                    - "livekit-vyom.indusnettechnologies.com"
+                    - turn-livekit-vyom.indusnettechnologies.com
             handle:
               - handler: tls
-                connection_policies:
-                  - alpn: ["http/1.1"]
               - handler: proxy
                 upstreams:
-                  - dial: ["localhost:7880"]
-          - match:
-              - tls:
-                  sni:
-                    - "whip-livekit-vyom.indusnettechnologies.com"
-            handle:
-              - handler: tls
-                connection_policies:
-                  - alpn: ["http/1.1"]
-              - handler: proxy
-                upstreams:
-                  - dial: ["localhost:8080"]
+                  - dial: localhost:5349
