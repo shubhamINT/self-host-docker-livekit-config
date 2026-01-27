@@ -19,6 +19,7 @@ sudo systemctl enable docker
 cat << EOF > /opt/livekit/livekit.yaml
 port: 7880
 bind_addresses:
+    - "127.0.0.1"
     - "0.0.0.0"
 rtc:
     tcp_port: 7881
@@ -27,7 +28,7 @@ rtc:
     use_external_ip: true
     enable_loopback_candidate: false
 redis:
-    address: localhost:6379
+    address: 127.0.0.1:6379
     username: ""
     password: ""
     db: 0
@@ -82,7 +83,7 @@ apps:
               - handler: tls
               - handler: proxy
                 upstreams:
-                  - dial: ["localhost:5349"]
+                  - dial: ["127.0.0.1:5349"]
           - match:
               - tls:
                   sni:
@@ -93,7 +94,7 @@ apps:
                   - alpn: ["http/1.1"]
               - handler: proxy
                 upstreams:
-                  - dial: ["localhost:7880"]
+                  - dial: ["127.0.0.1:7880"]
           - match:
               - tls:
                   sni:
@@ -104,7 +105,7 @@ apps:
                   - alpn: ["http/1.1"]
               - handler: proxy
                 upstreams:
-                  - dial: ["localhost:8080"]
+                  - dial: ["127.0.0.1:8080"]
 
 
 EOF
@@ -114,6 +115,11 @@ cat << "EOF" > /opt/livekit/update_ip.sh
 #!/usr/bin/env bash
 ip=`ip addr show |grep "inet " |grep -v 127.0.0. |head -1|cut -d" " -f6|cut -d/ -f1`
 sed -i.orig -r "s/\\\"(.+)(\:5349)/\\\"$ip\2/" /opt/livekit/caddy.yaml
+# Force explicit IPv4 for all 0.0.0.0 occurrences
+sed -i "s/0\.0\.0\.0/$ip/g" /opt/livekit/livekit.yaml
+sed -i "s/0\.0\.0\.0/$ip/g" /opt/livekit/ingress.yaml
+# Ensure internal proxying in Caddy uses 127.0.0.1
+sed -i "s/localhost/127.0.0.1/g" /opt/livekit/caddy.yaml
 
 
 EOF
@@ -201,7 +207,7 @@ EOF
 # egress config
 cat << EOF > /opt/livekit/egress.yaml
 redis:
-    address: localhost:6379
+    address: 127.0.0.1:6379
     username: ""
     password: ""
     db: 0
@@ -221,7 +227,7 @@ EOF
 # ingress config
 cat << EOF > /opt/livekit/ingress.yaml
 redis:
-    address: localhost:6379
+    address: 127.0.0.1:6379
     username: ""
     password: ""
     db: 0
@@ -235,6 +241,7 @@ redis:
 api_key: APID8LynJKrhDzo
 api_secret: 7RcURNf1t5jMaJOfB5yDeP3Rvz1XL8VXRWeEP3WSATvA
 ws_url: wss://livekit-vyom.indusnettechnologies.com
+bind_address: 0.0.0.0
 rtmp_port: 1935
 whip_port: 8080
 http_relay_port: 9090
