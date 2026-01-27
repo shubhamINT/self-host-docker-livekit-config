@@ -1,5 +1,5 @@
 redis:
-    address: 127.0.0.1:6379
+    address: localhost:6379
     username: ""
     password: ""
     db: 0
@@ -13,7 +13,6 @@ redis:
 api_key: APID8LynJKrhDzo
 api_secret: 7RcURNf1t5jMaJOfB5yDeP3Rvz1XL8VXRWeEP3WSATvA
 ws_url: wss://livekit-vyom.indusnettechnologies.com
-bind_address: 0.0.0.0
 rtmp_port: 1935
 whip_port: 8080
 http_relay_port: 9090

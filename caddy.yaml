@@ -15,7 +15,7 @@ apps:
   layer4:
     servers:
       main:
-        listen: ["tcp4/0.0.0.0:443"]
+        listen: [":443"]
         routes:
           - match:
             - tls:
@@ -25,7 +25,7 @@ apps:
               - handler: tls
               - handler: proxy
                 upstreams:
-                  - dial: ["127.0.0.1:5349"]
+                  - dial: ["localhost:5349"]
           - match:
               - tls:
                   sni:
@@ -47,4 +47,4 @@ apps:
                   - alpn: ["http/1.1"]
               - handler: proxy
                 upstreams:
-                  - dial: ["127.0.0.1:8080"]
+                  - dial: ["localhost:8080"]

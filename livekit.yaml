@@ -1,6 +1,6 @@
 port: 7880
 bind_addresses:
-    - "0.0.0.0"
+    - ""
 rtc:
     tcp_port: 7881
     port_range_start: 50000
@@ -8,7 +8,7 @@ rtc:
     use_external_ip: true
     enable_loopback_candidate: false
 redis:
-    address: 127.0.0.1:6379
+    address: localhost:6379
     username: ""
     password: ""
     db: 0
