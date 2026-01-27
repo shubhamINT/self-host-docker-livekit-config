@@ -19,7 +19,7 @@ sudo systemctl enable docker
 cat << EOF > /opt/livekit/livekit.yaml
 port: 7880
 bind_addresses:
-    - ""
+    - "0.0.0.0"
 rtc:
     tcp_port: 7881
     port_range_start: 50000
@@ -72,7 +72,7 @@ apps:
   layer4:
     servers:
       main:
-        listen: [":443"]
+        listen: ["tcp4/0.0.0.0:443"]
         routes:
           - match:
             - tls:
@@ -190,7 +190,7 @@ WantedBy=multi-user.target
 EOF
 # redis config
 cat << EOF > /opt/livekit/redis.conf
-bind 127.0.0.1 ::1
+bind 127.0.0.1
 protected-mode yes
 port 6379
 timeout 0
