@@ -32,7 +32,7 @@ apps:
             handle:
               - handler: reverse_proxy
                 upstreams:
-                  - dial: localhost:7880
+                  - dial: ["localhost:7880"]
 
           # WHIP endpoint
           - match:
@@ -41,7 +41,7 @@ apps:
             handle:
               - handler: reverse_proxy
                 upstreams:
-                  - dial: localhost:8080
+                  - dial: ["localhost:8080"]
 
       # HTTP → HTTPS redirect
       redirect:
@@ -72,4 +72,4 @@ apps:
               - handler: tls
               - handler: proxy
                 upstreams:
-                  - dial: localhost:5349
+                  - dial: ["localhost:5349"]
