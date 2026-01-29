@@ -14,6 +14,8 @@ These ports are used for client connections and media streaming.
 | **3478** | UDP | TURN | TURN (STUN/TURN media relay) |
 | **1935** | TCP | Ingress | RTMP ingest |
 | **7885** | UDP | Ingress | Ingress RTC |
+| **5060** | TCP/UDP | SIP | SIP Signaling |
+| **10000-20000** | UDP | SIP | RTP Media Traffic |
 
 ## Internal Ports (Should NOT be exposed publicly)
 
