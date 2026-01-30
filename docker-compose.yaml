@@ -51,7 +51,7 @@ services:
     restart: "unless-stopped"
     network_mode: "host"
     environment:
-      - "SIP_CONFIG_FILE=/etc/sip.yaml"
+      - "SIP_CONFIG_FILE=/sip/config.yaml"
     volumes:
-      - "./sip.yaml:/etc/sip.yaml"
+      - "./sip.yaml:/sip/config.yaml"
 
