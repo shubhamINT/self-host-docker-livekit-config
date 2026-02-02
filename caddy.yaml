@@ -17,6 +17,7 @@ apps:
         - livekit-vyom.indusnettechnologies.com
         - turn-livekit-vyom.indusnettechnologies.com
         - whip-livekit-vyom.indusnettechnologies.com
+        - api-livekit-vyom.indusnettechnologies.com
 
   # -------------------------------
   # HTTP (Port 80 Redirects Only)
@@ -79,3 +80,16 @@ apps:
               - handler: proxy
                 upstreams:
                   - dial: ["localhost:8080"]
+
+          # API Service
+          - match:
+              - tls:
+                  sni:
+                    - api-livekit-vyom.indusnettechnologies.com
+            handle:
+              - handler: tls
+                connection_policies:
+                  - alpn: ["http/1.1"]
+              - handler: proxy
+                upstreams:
+                  - dial: ["localhost:8000"]
