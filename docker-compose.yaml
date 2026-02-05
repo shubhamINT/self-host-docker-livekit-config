@@ -26,8 +26,6 @@ services:
     volumes:
       - "./redis.conf:/etc/redis.conf"
       - "redis-data:/data"
-    sysctls:
-      - net.core.somaxconn=65535
 
   egress:
     image: "livekit/egress:latest"
