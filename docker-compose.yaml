@@ -25,6 +25,9 @@ services:
     network_mode: "host"
     volumes:
       - "./redis.conf:/etc/redis.conf"
+      - "redis-data:/data"
+    sysctls:
+      - net.core.somaxconn=65535
 
   egress:
     image: "livekit/egress:latest"
@@ -55,3 +58,5 @@ services:
     volumes:
       - "./sip.yaml:/sip/config.yaml"
 
+volumes:
+  redis-data:
