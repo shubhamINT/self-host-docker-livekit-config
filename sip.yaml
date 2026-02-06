@@ -16,12 +16,12 @@ api_secret: "7RcURNf1t5jMaJOfB5yDeP3Rvz1XL8VXRWeEP3WSATvA"
 ws_url: "wss://livekit-vyom.indusnettechnologies.com"
 sip_port: 5060
 rtp_port: "10000-20000"
-use_external_ip: false
-nat_1_1_mapping: "13.234.150.174"
+# use_external_ip: false
+# nat_1_1_mapping: "13.234.150.174"
 
-sip_stack:
-  max_concurrent_calls: 200
-  max_call_rate: 50.0
+# sip_stack:
+#   max_concurrent_calls: 200
+#   max_call_rate: 50.0
 
 logging:
   level: "debug"
