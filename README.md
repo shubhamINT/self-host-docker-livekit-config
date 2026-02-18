@@ -15,7 +15,7 @@ These ports are used for client connections and media streaming.
 | **1935**        | TCP      | Ingress | RTMP ingest                       |
 | **7885**        | UDP      | Ingress | Ingress RTC                       |
 | **5060, 5070**  | TCP/UDP  | SIP     | SIP Signaling (5070 for Exotel)   |
-| **10000-40000** | UDP      | SIP     | RTP Media Traffic                 |
+| **10000-30000** | UDP      | SIP     | RTP Media Traffic                 |
 
 ## Internal Ports (Should NOT be exposed publicly)
 
