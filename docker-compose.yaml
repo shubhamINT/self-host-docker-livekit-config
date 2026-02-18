@@ -55,3 +55,13 @@ services:
     volumes:
       - "./sip.yaml:/sip/config.yaml"
 
+  sip-exotel:
+    image: "livekit/sip:latest"
+    restart: "unless-stopped"
+    network_mode: "host"
+    environment:
+      - "SIP_CONFIG_FILE=/sip/config.yaml"
+    volumes:
+      - "./sip-exotel.yaml:/sip/config.yaml"
+
+
