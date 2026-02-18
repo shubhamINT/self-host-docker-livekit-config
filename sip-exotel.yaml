@@ -1,0 +1,27 @@
+redis:
+  address: "localhost:6379"
+  username: ""
+  password: ""
+  db: 0
+  use_tls: false
+  sentinel_master_name: ""
+  sentinel_username: ""
+  sentinel_password: ""
+  sentinel_addresses: []
+  cluster_addresses: []
+  max_redirects: null
+
+api_key: "APID8LynJKrhDzo"
+api_secret: "7RcURNf1t5jMaJOfB5yDeP3Rvz1XL8VXRWeEP3WSATvA"
+ws_url: "wss://livekit-vyom.indusnettechnologies.com"
+sip_port: 5070
+rtp_port: "10000-40000"
+use_external_ip: true
+# nat_1_1_mapping: "13.234.150.174"
+
+# sip_stack:
+#   max_concurrent_calls: 200
+#   max_call_rate: 50.0
+
+logging:
+  level: "debug"
