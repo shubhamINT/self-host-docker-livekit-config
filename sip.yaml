@@ -15,7 +15,7 @@ api_key: "APID8LynJKrhDzo"
 api_secret: "7RcURNf1t5jMaJOfB5yDeP3Rvz1XL8VXRWeEP3WSATvA"
 ws_url: "wss://livekit-vyom.indusnettechnologies.com"
 sip_port: 5060
-rtp_port: "10000-30000"
+rtp_port: "10000-20000"
 use_external_ip: true
 # nat_1_1_mapping: "13.234.150.174"
 
