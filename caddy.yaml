@@ -19,6 +19,8 @@ apps:
         - whip-livekit-vyom.indusnettechnologies.com
         - api-livekit-vyom.indusnettechnologies.com
         - demo-livekit-vyom.indusnettechnologies.com
+        - voicekit.indusnettechnologies.com
+        - voicekit-api.indusnettechnologies.com
 
   # -------------------------------
   # HTTP (Port 80 Redirects Only)
@@ -107,3 +109,29 @@ apps:
               - handler: proxy
                 upstreams:
                   - dial: ["localhost:8000"]
+
+          # VoiceKit API
+          - match:
+              - tls:
+                  sni:
+                    - voicekit-api.indusnettechnologies.com
+            handle:
+              - handler: tls
+                connection_policies:
+                  - alpn: ["http/1.1"]
+              - handler: proxy
+                upstreams:
+                  - dial: ["localhost:8002"]
+
+          # VoiceKit Web
+          - match:
+              - tls:
+                  sni:
+                    - voicekit.indusnettechnologies.com
+            handle:
+              - handler: tls
+                connection_policies:
+                  - alpn: ["http/1.1"]
+              - handler: proxy
+                upstreams:
+                  - dial: ["localhost:8003"]
